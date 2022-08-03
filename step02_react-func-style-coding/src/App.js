@@ -2,11 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  var [funcShow, setFuncshow] = useState(true);
+  var [classShow, setClassShow] = useState(true);
   return (
     <div className="container">
       <h1>Hello World</h1>
-      <FuncComp initNumber={2}></FuncComp>
-      <ClassComp initNumber={2}></ClassComp>
+      <input type="button" value="remove func" onClick={
+        function() {
+          setFuncshow(false)
+        }}></input>
+      <input type="button" value="remove class" onClick={
+        function() {
+          setClassShow(false)
+        }}></input>
+      {funcShow ? <FuncComp initNumber={2}></FuncComp> : null}
+      {classShow ? <ClassComp initNumber={2}></ClassComp> : null}
     </div>
     )
 }
@@ -27,16 +37,35 @@ function FuncComp(props) {
 
   var[_date, setDate] = useState((new Date()).toString());
 
+  useEffect(function() {
+    console.log('%cfunc => useEffect (componentDidMount) ' +(++funcId), funcStyle);
+    document.title = number;
+    return function() {
+      console.log('%cfunc => useEffect return (componentWillunMount) '+(++funcId), funcStyle);
+    }
+  }, []);
+
   //side effect
   useEffect(function() {
-    console.log('%cfunc => useEffect A (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
-    document.title = number + ' : ' + _date;
-  });
+    console.log('%cfunc => useEffect number (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
+    document.title = number;
+    return function() {
+      console.log('%cfunc => useEffect number return (componentDidMount & componentDidUpdate' +(++funcId), funcStyle);
+    }
+  }, [number]);
 
   useEffect(function() {
-    console.log('%cfunc => useEffect B (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
-    document.title = number + ' : ' + _date;
-  })
+    console.log('%cfunc => useEffect _date (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
+    document.title = _date;
+    return function() {
+      console.log('%cfunc => useEffect _date return (componentDidMount & componentDidUpdate' +(++funcId), funcStyle);
+    }
+  }, [_date]);
+
+  // useEffect(function() {
+  //   console.log('%cfunc => useEffect B (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
+  //   document.title = number + ' : ' + _date;
+  // })
 
   console.log('%cfunc => render '+(++funcId), funcStyle);
 
