@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <article>
+
+        </article>
+        <input type="button" value="fecth" onclick="
+            // fetch('html').then(function(response){
+            //     response.text().then(function(text) {
+            //         document.querySelector('article').innerHTML = text;
+            //     })
+            // })
+            //Asynchronuous : 비동기, 동시에 실행, 병렬적으로 실행
+            // function callbackme(){
+            //     console.log('response end');
+            // }
+
+            fetch('html').then(function(response) {
+                console.log(response.status);
+                if(response.status == '404') {
+                    alert('Not found')
+                }
+                console.log('response end');
+            })
+            console.log(1);
+            console.log(2);
+        ">
+    </body>
+</html>
